@@ -1,12 +1,17 @@
 <?php
 
+use BotMan\BotMan\BotManFactory;
 use App\Http\Middleware\UserCheck;
 use App\Conversations\StartConversation;
+use BotMan\BotMan\Drivers\DriverManager;
 use App\Http\Controllers\BotManController;
 use App\Http\Controllers\mainMenuController;
 
 $botman = resolve('botman');
+DriverManager::loadDriver(\BotMan\Drivers\Telegram\TelegramDriver::class);
 
+// Create BotMan instance
+BotManFactory::create($config);
 $middleware=new UserCheck();
 
 $botman->middleware->received($middleware);
